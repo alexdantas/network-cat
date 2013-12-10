@@ -1,6 +1,6 @@
 # network-cat
 
-Like `cat`, but on network dude.
+Like `cat`, but on tubes.
 
 ![network cat](http://alexdantas.net/projects/network-cat/images/cat-at-laptop.jpg)
 
@@ -44,7 +44,7 @@ C++ rules but Ruby ownz.
 ## Credits
 
 Don't take this project too seriously, it was made as an assignment
-on a Networking class.
+to a Networking class.
 
 It was made by Alexandre Dantas on a rainy afternoon.
 
@@ -53,4 +53,4 @@ It was made by Alexandre Dantas on a rainy afternoon.
 
 <!-- Ignore the following if viewing on text mode -->
 [![emacs banner](http://badges.alexdantas.net/emacs.png)](http://badges.alexdantas.net/)
-
+[![free-software banner](http://badges.alexdantas.net/free-software.png)](http://badges.alexdantas.net/)
