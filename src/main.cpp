@@ -16,7 +16,6 @@ int main(int argc, char* argv[])
 	try
 	{
 		Arguments::handle(argc, argv);
-		Log::error(Log::intToString(Arguments::port));
 
 		if (Arguments::debug)   Log::debugMode(true);
 		if (Arguments::verbose) Log::verboseMode(true);
@@ -33,7 +32,7 @@ int main(int argc, char* argv[])
 			server.run();
 		}
 		else
-			throw std::string("Wtf");
+			throw std::string("Unexpected behavior: Neither Client or Server");
 	}
 	catch (std::string s)
 	{
@@ -42,4 +41,3 @@ int main(int argc, char* argv[])
 	}
 	return 0;
 }
-

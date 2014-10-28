@@ -65,7 +65,7 @@ void Client::send(std::string msg)
 }
 void Client::run()
 {
-	Log::log("Connected!");
+	Log::verbose("Connected!");
 
     while (true)
     {
@@ -91,4 +91,3 @@ std::string Client::hostToIp(std::string hostname)
 
 	return std::string(inet_ntoa(*my_host_address));
 }
-

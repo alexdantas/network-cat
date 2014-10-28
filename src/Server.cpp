@@ -57,7 +57,7 @@ Server::Server(int port):
 	// Show our IP address to the user
 	// WARNING: ugly as hell
 	Log::verbose("Tell clients your IP");
-	Log::log("Interface name/IP address");
+	Log::verbose("Interface name/IP address");
 
 	struct ifaddrs* raw_interfaces = NULL;
 	struct ifaddrs* curr    = NULL;
@@ -77,9 +77,9 @@ Server::Server(int port):
 			char buffer[20];
 			inet_ntop(AF_INET, tmp, buffer, 20);
 
-			Log::log(std::string(curr->ifa_name) +
-			         std::string("/") +
-			         std::string(buffer));
+			Log::verbose(std::string(curr->ifa_name) +
+			             std::string("/") +
+			             std::string(buffer));
 		}
 	}
 
@@ -120,4 +120,3 @@ void Server::run()
 		Log::log(received);
 	}
 }
-
