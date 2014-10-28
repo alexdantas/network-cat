@@ -17,9 +17,9 @@ int main(int argc, char* argv[])
 	{
 		Arguments::handle(argc, argv);
 
+		if (Arguments::color)   Log::colors(true);
 		if (Arguments::debug)   Log::debugMode(true);
 		if (Arguments::verbose) Log::verboseMode(true);
-		Log::colors(false);
 
 		if (Arguments::client)
 		{

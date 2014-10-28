@@ -18,9 +18,9 @@ public:
 	static bool server;
 	static std::string ip;
 	static int port;
+	static bool color;       ///< Print messages with colors?
     static bool debug;
     static bool verbose;
 };
 
 #endif //ARGUMENTS_H_DEFINED
-

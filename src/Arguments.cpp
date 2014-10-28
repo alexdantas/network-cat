@@ -6,6 +6,7 @@ bool         Arguments::client  = false;
 bool         Arguments::server  = false;
 std::string  Arguments::ip      = "";
 int          Arguments::port    = DEFAULT_PORT;
+bool         Arguments::color   = false;
 bool         Arguments::debug   = false;
 bool         Arguments::verbose = false;
 
@@ -21,16 +22,19 @@ void Arguments::handle(int argc, char* argv[])
 	                  "    $ network-cat -L [port]\n"
 	                  "\n"
 	                  "Flags:\n"
-	                  "--debug, --verbose\n");
+	                  "--colors, --debug, --verbose\n");
 
 	if (argc < 2)
-		throw std::string("Not enough arguments\n") + usage;
+		throw std::string("Not enough arguments\n\n") + usage;
 
 	for (int i = 1; i < argc; i++)
 	{
 		if (std::string(argv[i]) == std::string("--help") ||
 		    std::string(argv[i]) == std::string("-h"))
 			throw usage;
+
+		if (std::string(argv[i]) == std::string("--colors"))
+			Arguments::color = true;
 
 		if (std::string(argv[i]) == std::string("--debug"))
 			Arguments::debug = true;
@@ -66,4 +70,3 @@ void Arguments::handle(int argc, char* argv[])
 	}
 
 }
-

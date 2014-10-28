@@ -8,24 +8,19 @@ bool Log::isVerboseMode   = false;
 // std::ostream& Log::stderr       = std::cout;
 // bool          Log::isUsingFiles = false;
 
-// Terminal escape codes.
-//
-// They are commands to the terminal
-// (print the following text at color X, clear the screen, etc).
-//
-// Don't use this on files!
-
-std::string bold_red     = "\e[1;31m";
-std::string red          = "\e[0;31m";
-std::string bold_cyan    = "\e[1;36m";
-std::string cyan         = "\e[0;36m";
-std::string bold_green   = "\e[1;32m";
-std::string green        = "\e[0;32m";
-std::string bold_yellow  = "\e[1;33m";
-std::string yellow       = "\e[0;33m";
-std::string reset_color  = "\e[0m";
-std::string clear_screen = "[H[2J";
-std::string clear_line   = "\r\e[0K";
+// These will be filled with terminal escape codes
+// Check out the "Log::color()" function.
+std::string bold_red     = "";
+std::string red          = "";
+std::string bold_cyan    = "";
+std::string cyan         = "";
+std::string bold_green   = "";
+std::string green        = "";
+std::string bold_yellow  = "";
+std::string yellow       = "";
+std::string reset_color  = "";
+std::string clear_screen = "";
+std::string clear_line   = "";
 
 // Prefixes
 std::string errorPrefix   = "Error:   ";
@@ -90,6 +85,12 @@ void Log::colors(bool option)
 {
 	if (option)
 	{
+        // Terminal escape codes.
+        //
+        // They are commands to the terminal
+        // (print the following text at color X, clear the screen, etc).
+        //
+        // Don't use this on files!
 		bold_red     = "\e[1;31m";
 		red          = "\e[0;31m";
 		bold_cyan    = "\e[1;36m";
@@ -127,4 +128,3 @@ std::string Log::intToString(int num)
     std::string numStr = ss.str();
     return numStr;
 }
-
