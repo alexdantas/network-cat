@@ -12,6 +12,13 @@ struct UDPSocket
     /// connection to fully end before starting a new one.
     void setReusable();
 
+    /// Binds socket to #port.
+    /// Makes socket listen to incoming connections over #port.
+    ///
+    /// @note If it's under 40,000 something you might need
+    ///       administrator rights.
+    void bindTo(int port);
+
     /// Raw socket, used by the UNIX socket API.
     int raw_socket;
 };

@@ -42,3 +42,23 @@ void UDPSocket::setReusable()
     if (ret < 0)
         throw std::string(strerror(errno)); // show Last error
 }
+
+void UDPSocket::bindTo(int port)
+{
+    // Which settings to apply to our socket
+    struct sockaddr_in address;
+    memset(&address, '\0', sizeof(address));
+
+    // Make it an IP socket bound to any address on this port
+    address.sin_family      = AF_INET;
+    address.sin_addr.s_addr = htonl(INADDR_ANY);
+    address.sin_port        = htons(port);
+
+    // Bind socket to previous settings
+    int ret = bind(this->raw_socket,
+                   (struct sockaddr*) &address,
+                   sizeof(address));
+
+    if (ret < 0)
+        throw std::string(strerror(errno));
+}

@@ -24,21 +24,7 @@ Server::Server(int port):
 	this->socket->setReusable();
 	Log::debug("Socket set as reusable");
 
-	// Define socket settings
-	struct sockaddr_in address;
-	memset(&address, '\0', sizeof(address));
-
-	address.sin_family      = AF_INET;
-	address.sin_addr.s_addr = htonl(INADDR_ANY);
-	address.sin_port        = htons(port);
-
-	// Bind socket to previous settings
-	int ret = bind(this->socket->raw_socket,
-	               (struct sockaddr*) &address,
-	               sizeof(address));
-
-	if (ret < 0)
-		throw std::string(strerror(errno));
+	this->socket->bindTo(port);
 	Log::debug("Socket bound");
 
 	// Show our IP address to the user
