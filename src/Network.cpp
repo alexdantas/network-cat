@@ -80,3 +80,42 @@ std::string Network::hostToIp(std::string& hostname)
 
     return std::string(inet_ntoa(*my_host_address));
 }
+
+std::vector<std::pair<std::string, std::string> > Network::getInterfaces()
+{
+
+    std::vector<std::pair<std::string, std::string> > interfaces;
+
+    struct ifaddrs* raw_interfaces = NULL;
+    struct ifaddrs* curr           = NULL;
+
+    // Gets the raw interfaces as a linked list
+    getifaddrs(&raw_interfaces);
+
+    for (curr = raw_interfaces;
+         curr != NULL;
+         curr = curr->ifa_next)
+    {
+        // Is it a valid IPv4 Address?
+        if (curr->ifa_addr->sa_family == AF_INET)
+        {
+            // Pointer to raw IP address
+            void* tmp = &((struct sockaddr_in*)curr->ifa_addr)->sin_addr;
+
+            // Convert it to a string dotted IP address (eg. 192.168.21.2)
+            char buffer[20];
+            inet_ntop(AF_INET, tmp, buffer, 20);
+
+            std::string name(curr->ifa_name);
+            std::string ip(buffer);
+
+            std::pair<std::string, std::string> interface(name, ip);
+            interfaces.push_back(interface);
+        }
+    }
+
+    if (raw_interfaces != NULL)
+        freeifaddrs(raw_interfaces);
+
+    return interfaces;
+}

@@ -10,6 +10,7 @@
 #include "Server.hpp"
 #include "Client.hpp"
 #include "Log.hpp"
+#include "Network.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -29,6 +30,16 @@ int main(int argc, char* argv[])
 		else if (Arguments::server)
 		{
 			Server server(Arguments::port);
+
+			// Show our interfaces and IP addresses to the user
+			// (Ugly as hell...!)
+			Log::verbose("Interface name - IP address");
+			std::vector<std::pair<std::string, std::string> > interfaces = Network::getInterfaces();
+			for(std::vector<std::pair<std::string, std::string> >::iterator it = interfaces.begin();
+				it != interfaces.end();
+				it++)
+				Log::verbose((*it).first + " - " + (*it).second);
+
 			server.run();
 		}
 		else

@@ -2,6 +2,7 @@
 #define NETWORK_H_DEFINED
 
 #include <string>
+#include <vector>
 
 /// A single UDP socket, abstracted away.
 ///
@@ -32,6 +33,16 @@ namespace Network
     /// Acts as the DNS, returning a string representation of the
     /// IP of #hostname.
     std::string hostToIp(std::string& hostname);
+
+    /// Returns all networking interfaces of the current machine.
+    ///
+    /// Looks daunting, but it's merely a vector of interfaces,
+    /// like <interface name, interface ip address>.
+    ///
+    /// For example, on Linux, it could be <"eth0", "192.168.0.6">
+    /// Windows usually have a big-ass hex string.
+    ///
+    std::vector<std::pair<std::string, std::string> > getInterfaces();
 }
 
 #endif //NETWORK_H_DEFINED

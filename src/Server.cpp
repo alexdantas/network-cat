@@ -27,40 +27,7 @@ Server::Server(int port):
 	this->socket->bindTo(port);
 	Log::debug("Socket bound");
 
-	// Show our IP address to the user
-	// WARNING: ugly as hell
-	Log::verbose("Tell clients your IP");
-	Log::verbose("Interface name/IP address");
-
-	struct ifaddrs* raw_interfaces = NULL;
-	struct ifaddrs* curr    = NULL;
-
-	getifaddrs(&raw_interfaces);
-
-	for (curr = raw_interfaces;
-	     curr != NULL;
-	     curr = curr->ifa_next)
-	{
-		// Is it a valid IPv4 Address?
-		if (curr->ifa_addr->sa_family == AF_INET)
-		{
-			// Pointer to raw address
-			void* tmp = &((struct sockaddr_in*)curr->ifa_addr)->sin_addr;
-
-			char buffer[20];
-			inet_ntop(AF_INET, tmp, buffer, 20);
-
-			Log::verbose(std::string(curr->ifa_name) +
-			             std::string("/") +
-			             std::string(buffer));
-		}
-	}
-
-	if (raw_interfaces != NULL)
-		freeifaddrs(raw_interfaces);
-
-	Log::verbose("Server created at port " +
-	             Log::intToString(port));
+	Log::verbose("Server created at port " + Log::intToString(port));
 }
 void Server::run()
 {
