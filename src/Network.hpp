@@ -15,7 +15,7 @@ struct UDPSocket
     int raw_socket;
 };
 
-/// UDP Socket specific for listening to and receive data.
+/// UDP Socket specific for listening to and receive data (strings).
 struct UDPServer: UDPSocket
 {
     /// Sets this socket connection as reusable.
@@ -29,6 +29,15 @@ struct UDPServer: UDPSocket
     /// @note If it's under 40,000 something you might need
     ///       administrator rights.
     void bindTo(int port);
+};
+
+/// UDP Socket specific for sending data (strings).
+struct UDPClient: UDPSocket
+{
+    /// Sends #message to #ip through #port.
+    /// There needs to be a server listening on remote #ip and
+    /// to that #port, otherwise the message will be lost.
+    void send(std::string message, std::string ip, int port);
 };
 
 /// Reusable functions for networking.

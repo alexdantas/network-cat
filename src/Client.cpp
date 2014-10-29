@@ -21,7 +21,7 @@ Client::Client(std::string server_hostname, int port):
 	server_port(port),
 	socket(NULL)
 {
-	this->socket = new UDPSocket();
+	this->socket = new UDPClient();
 	Log::debug("Socket created");
 
 	this->server_ip = Network::hostToIp(server_hostname);
@@ -31,42 +31,7 @@ Client::Client(std::string server_hostname, int port):
 }
 void Client::send(std::string msg)
 {
-	// Socket address to the server.
-	// This is the raw connection we actually make to the server.
-	// We send raw data through this.
-	struct sockaddr_in server_address;
-	memset(&server_address, '\0', sizeof(server_address));
-
-	// It's an IP connection on a specific port
-	server_address.sin_family = AF_INET;
-	server_address.sin_port   = htons(this->server_port);
-
-	// To send stuff to the server we need to know about it.
-	// This is the information we get from the server
-	// (IP address, along with other useless stuff)
-	struct hostent* server_host_entity;
-
-	// Retrieving it...
-	server_host_entity = gethostbyname(this->server_ip.c_str());
-	if (server_host_entity == NULL)
-		throw std::string(strerror(errno));
-
-	// Storing the server information on that connection thingy
-	memcpy((void*) &server_address.sin_addr,
-	       server_host_entity->h_addr_list[0],
-	       server_host_entity->h_length);
-
-	// Finally actually sending information to the server!
-	int ret = sendto(this->socket->raw_socket,
-	                 msg.c_str(),
-	                 msg.length(),
-	                 0, // flags
-	                 (struct sockaddr*) &server_address,
-	                 sizeof(server_address));
-
-	if (ret < 0)
-		throw std::string(strerror(errno));
-
+	this->socket->send(msg, this->server_ip, this->server_port);
 	Log::debug("Sent message");
 }
 void Client::run()

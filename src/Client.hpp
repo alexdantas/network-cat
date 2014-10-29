@@ -36,7 +36,7 @@ private:
 	/// Port to connect to the server.
 	int server_port;
 
-	UDPSocket* socket;
+	UDPClient* socket;
 };
 
 #endif //CLIENT_H_DEFINED

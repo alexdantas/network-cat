@@ -81,6 +81,45 @@ std::string Network::hostToIp(std::string& hostname)
     return std::string(inet_ntoa(*my_host_address));
 }
 
+void UDPClient::send(std::string message, std::string ip, int port)
+{
+    // Socket address to the server.
+    // This is the raw connection we actually make to the server.
+    // We send raw data through this.
+    struct sockaddr_in server_address;
+    memset(&server_address, '\0', sizeof(server_address));
+
+    // It's an IP connection on a specific port
+    server_address.sin_family = AF_INET;
+    server_address.sin_port   = htons(port);
+
+    // To send stuff to the server we need to know about it.
+    // This is the information we get from the server
+    // (IP address, along with other useless stuff)
+    struct hostent* server_host_entity;
+
+    // Retrieving it...
+    server_host_entity = gethostbyname(ip.c_str());
+    if (server_host_entity == NULL)
+        throw std::string(strerror(errno));
+
+    // Storing the server information on that connection thingy
+    memcpy((void*) &server_address.sin_addr,
+           server_host_entity->h_addr_list[0],
+           server_host_entity->h_length);
+
+    // Finally actually sending information to the server!
+    int ret = sendto(this->raw_socket,
+                     message.c_str(),
+                     message.length(),
+                     0, // flags
+                     (struct sockaddr*) &server_address,
+                     sizeof(server_address));
+
+    if (ret < 0)
+        throw std::string(strerror(errno));
+}
+
 std::vector<std::pair<std::string, std::string> > Network::getInterfaces()
 {
 
