@@ -1,20 +1,6 @@
 #include "Server.hpp"
 #include "Log.hpp"
 
-// include HELL for SOCKETS
-#include <errno.h>
-#include <stdint.h>     // absolute int types
-#include <string.h>     // memset()
-#include <fcntl.h>      // fcntl()
-#include <stdlib.h>
-#include <sys/socket.h> // socket() bind() inet_ntoa
-#include <sys/types.h>  // inet_ntoa
-#include <netinet/in.h> // inet_ntoa
-#include <arpa/inet.h>  // inet_ntoa
-#include <netdb.h>      // gethostbyname()
-#include <sys/types.h>
-#include <ifaddrs.h>
-
 Server::Server(int port):
 	port(port)
 {
