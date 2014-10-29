@@ -20,12 +20,9 @@ public:
 	void run();
 
 private:
-	std::string hostToIp(std::string hostname);
-
 	int          port;
 	int          sckt;
 	std::string  host;
 };
 
 #endif //CLIENT_H_DEFINED
-

@@ -1,6 +1,5 @@
 
 #include "Network.hpp"
-#include <string>
 
 // include HELL for SOCKETS
 #include <errno.h>
@@ -61,4 +60,18 @@ void UDPSocket::bindTo(int port)
 
     if (ret < 0)
         throw std::string(strerror(errno));
+}
+
+std::string Network::hostToIp(std::string hostname)
+{
+    struct hostent* my_host;
+    struct in_addr* my_host_address;
+
+    my_host = gethostbyname(hostname.c_str());
+    if (my_host == NULL)
+        return "";
+
+    my_host_address = (struct in_addr*)my_host->h_addr_list[0];
+
+    return std::string(inet_ntoa(*my_host_address));
 }

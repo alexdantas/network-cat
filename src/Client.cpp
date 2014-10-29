@@ -1,5 +1,6 @@
 #include "Client.hpp"
 #include "Log.hpp"
+#include "Network.hpp"
 
 // include HELL for SOCKETS
 #include <errno.h>
@@ -26,7 +27,7 @@ Client::Client(std::string ip, int port):
 	this->sckt = ret;
 	Log::debug("Socket created");
 
-	this->host = hostToIp(ip);
+	this->host = Network::hostToIp(ip);
 	Log::verbose("Client created on " + ip +
 	             " (" + this->host + ")" +
 	             " : " + Log::intToString(port));
@@ -76,18 +77,4 @@ void Client::run()
 
 	    send(input);
     }
-}
-
-std::string Client::hostToIp(std::string hostname)
-{
-	struct hostent* my_host;
-	struct in_addr* my_host_address;
-
-	my_host = gethostbyname(hostname.c_str());
-	if (my_host == NULL)
-		return "";
-
-	my_host_address = (struct in_addr*)my_host->h_addr_list[0];
-
-	return std::string(inet_ntoa(*my_host_address));
 }
