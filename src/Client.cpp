@@ -19,12 +19,7 @@
 Client::Client(std::string ip, int port):
 	port(port)
 {
-	// Create IP/UDP socket
-	int ret = socket(AF_INET, SOCK_DGRAM, 0);
-	if (ret < 0)
-		throw std::string(strerror(errno)); // show last error
-
-	this->sckt = ret;
+	this->socket = new UDPSocket();
 	Log::debug("Socket created");
 
 	this->host = Network::hostToIp(ip);
@@ -52,7 +47,7 @@ void Client::send(std::string msg)
 	       my_host->h_addr_list[0],
 	       my_host->h_length);
 
-	int ret = sendto(this->sckt,
+	int ret = sendto(this->socket->raw_socket,
 	                 msg.c_str(),
 	                 msg.length(),
 	                 0, // flags

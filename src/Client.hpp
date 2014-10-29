@@ -2,6 +2,7 @@
 #define CLIENT_H_DEFINED
 
 #include <string>
+#include "Network.hpp"
 
 /// Implements the client that will send data to a server.
 class Client
@@ -20,8 +21,8 @@ public:
 	void run();
 
 private:
-	int          port;
-	int          sckt;
+	int port;
+	UDPSocket* socket;
 	std::string  host;
 };
 
