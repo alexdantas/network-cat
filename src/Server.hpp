@@ -4,10 +4,6 @@
 #include <string>
 #include "Network.hpp"
 
-/// Maximum size (in bytes) that we get at once from a remote
-/// client.
-#define SERVER_BUFFER_SIZE 666
-
 /// Server that receives indefinite data from clients.
 ///
 class Server

@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 
+/// Maximum size (in bytes) that we get at once from a remote client.
+#define SERVER_BUFFER_SIZE 666
+
 /// A single UDP socket, abstracted away.
 ///
 struct UDPSocket
@@ -29,6 +32,12 @@ struct UDPServer: UDPSocket
     /// @note If it's under 40,000 something you might need
     ///       administrator rights.
     void bindTo(int port);
+
+    /// Gets a string from any remote client.
+    /// @note Make sure to call `bindTo()` first!
+    /// It could have any size, but generally it would be
+    /// less than 512 bytes.
+    std::string receive();
 };
 
 /// UDP Socket specific for sending data (strings).

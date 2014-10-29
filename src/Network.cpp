@@ -62,6 +62,28 @@ void UDPServer::bindTo(int port)
         throw std::string(strerror(errno));
 }
 
+std::string UDPServer::receive()
+{
+    // will hold address of received message
+    struct sockaddr_in received_addr;
+    memset(&received_addr, '\0', sizeof(received_addr));
+    socklen_t addr_length = sizeof(received_addr);
+
+    char buffer[SERVER_BUFFER_SIZE];
+    memset(&buffer, '\0', SERVER_BUFFER_SIZE);
+
+    int bytes_received = recvfrom(this->raw_socket,
+                                buffer,
+                                SERVER_BUFFER_SIZE,
+                                0, // flags
+                                (struct sockaddr*) &received_addr,
+                                &addr_length);
+    if (bytes_received < 0)
+        throw std::string(strerror(errno));
+
+    return std::string(buffer);
+}
+
 std::string Network::hostToIp(std::string& hostname)
 {
     // Need to explicitly duplicate the string
