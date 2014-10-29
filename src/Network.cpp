@@ -62,12 +62,17 @@ void UDPSocket::bindTo(int port)
         throw std::string(strerror(errno));
 }
 
-std::string Network::hostToIp(std::string hostname)
+std::string Network::hostToIp(std::string& hostname)
 {
+    // Need to explicitly duplicate the string
+    // because "gethostbyname" actually modifies
+    // the C string (char*).
+    std::string hostname_dup = hostname.substr();
+
     struct hostent* my_host;
     struct in_addr* my_host_address;
 
-    my_host = gethostbyname(hostname.c_str());
+    my_host = gethostbyname(hostname_dup.c_str());
     if (my_host == NULL)
         return "";
 

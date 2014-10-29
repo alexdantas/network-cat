@@ -31,7 +31,7 @@ namespace Network
     /// Returns the IP address for #hostname.
     /// Acts as the DNS, returning a string representation of the
     /// IP of #hostname.
-    std::string hostToIp(std::string hostname);
+    std::string hostToIp(std::string& hostname);
 }
 
 #endif //NETWORK_H_DEFINED
