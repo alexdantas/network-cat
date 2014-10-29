@@ -40,7 +40,16 @@ int main(int argc, char* argv[])
 				it++)
 				Log::verbose((*it).first + " - " + (*it).second);
 
-			server.run();
+			// Hell yeah main loop
+			while (true)
+			{
+				std::string received = server.receive();
+				Log::verbose("Received " +
+							Log::intToString(received.length()) +
+							" bytes");
+
+				Log::log(received);
+			}
 		}
 		else
 			throw std::string("Unexpected behavior: Neither Client or Server");

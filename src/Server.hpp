@@ -21,9 +21,6 @@ public:
 	/// less than 512 bytes.
 	std::string receive();
 
-	/// Runs an infinite loop, receiving messages from hosts.
-	void run();
-
 private:
 	int port; ///< Port on which the server operates.
 

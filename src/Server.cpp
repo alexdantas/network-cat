@@ -50,16 +50,3 @@ std::string Server::receive()
 
 	return std::string(buffer);
 }
-void Server::run()
-{
-	// Hell yeah main loop
-	while (true)
-	{
-		std::string received = this->receive();
-		Log::verbose("Received " +
-		             Log::intToString(received.length()) +
-		             " bytes");
-
-		Log::log(received);
-	}
-}
