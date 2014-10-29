@@ -18,23 +18,10 @@
 Server::Server(int port):
 	port(port)
 {
-	// Create IP/UDP socket
-	int ret = socket(AF_INET, SOCK_DGRAM, 0);
-	if (ret < 0)
-		throw std::string(strerror(errno)); // show last error
-
-	this->sckt = ret;
+	this->socket = new UDPSocket();
 	Log::debug("Socket created");
 
-	// Sets socket port as reusable
-	int yes = 1;
-	ret = setsockopt(sckt,
-	                 SOL_SOCKET,
-	                 SO_REUSEADDR,
-	                 &yes,
-	                 sizeof(yes));
-	if (ret < 0)
-		throw std::string(strerror(errno));
+	this->socket->setReusable();
 	Log::debug("Socket set as reusable");
 
 	// Define socket settings
@@ -46,9 +33,9 @@ Server::Server(int port):
 	address.sin_port        = htons(port);
 
 	// Bind socket to previous settings
-	ret = bind(this->sckt,
-	           (struct sockaddr*) &address,
-	           sizeof(address));
+	int ret = bind(this->socket->raw_socket,
+	               (struct sockaddr*) &address,
+	               sizeof(address));
 
 	if (ret < 0)
 		throw std::string(strerror(errno));
@@ -102,7 +89,7 @@ void Server::run()
 		char buffer[SERVER_BUFFER_SIZE];
 		memset(&buffer, '\0', SERVER_BUFFER_SIZE);
 
-		int bytes_received = recvfrom(this->sckt,
+		int bytes_received = recvfrom(this->socket->raw_socket,
 		                              buffer,
 		                              SERVER_BUFFER_SIZE,
 		                              0, // flags

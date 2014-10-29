@@ -2,6 +2,7 @@
 #define SERVER_H_DEFINED
 
 #include <string>
+#include "Network.hpp"
 
 /// Maximum size (in bytes) that we get at once from a remote
 /// client.
@@ -23,8 +24,10 @@ public:
 
 private:
 	int port; ///< Port on which the server operates.
-	int sckt; ///< Raw socket.
+
+	/// Communication end-point.
+	/// Where the information will be received.
+	UDPSocket* socket;
 };
 
 #endif //SERVER_H_DEFINED
-
