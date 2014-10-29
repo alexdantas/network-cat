@@ -18,7 +18,7 @@
 Server::Server(int port):
 	port(port)
 {
-	this->socket = new UDPSocket();
+	this->socket = new UDPServer();
 	Log::debug("Socket created");
 
 	this->socket->setReusable();

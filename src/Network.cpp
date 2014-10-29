@@ -26,7 +26,7 @@ UDPSocket::UDPSocket():
     this->raw_socket = ret;
 }
 
-void UDPSocket::setReusable()
+void UDPServer::setReusable()
 {
     // "setsockopt()" needs a pointer
     // to an integer with value 1
@@ -42,7 +42,7 @@ void UDPSocket::setReusable()
         throw std::string(strerror(errno)); // show Last error
 }
 
-void UDPSocket::bindTo(int port)
+void UDPServer::bindTo(int port)
 {
     // Which settings to apply to our socket
     struct sockaddr_in address;

@@ -8,8 +8,16 @@
 ///
 struct UDPSocket
 {
+    /// Creates (and initializes) an empty socket.
     UDPSocket();
 
+    /// Raw socket, used by the UNIX socket API.
+    int raw_socket;
+};
+
+/// UDP Socket specific for listening to and receive data.
+struct UDPServer: UDPSocket
+{
     /// Sets this socket connection as reusable.
     /// This is useful for the server, avoids having to wait for the
     /// connection to fully end before starting a new one.
@@ -21,9 +29,6 @@ struct UDPSocket
     /// @note If it's under 40,000 something you might need
     ///       administrator rights.
     void bindTo(int port);
-
-    /// Raw socket, used by the UNIX socket API.
-    int raw_socket;
 };
 
 /// Reusable functions for networking.

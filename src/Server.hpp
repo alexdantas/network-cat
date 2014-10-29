@@ -26,7 +26,7 @@ private:
 
 	/// Communication end-point.
 	/// Where the information will be received.
-	UDPSocket* socket;
+	UDPServer* socket;
 };
 
 #endif //SERVER_H_DEFINED
