@@ -25,7 +25,16 @@ int main(int argc, char* argv[])
 		if (Arguments::client)
 		{
 			Client client(Arguments::ip, Arguments::port);
-			client.run();
+
+			while (true)
+			{
+				std::string input;
+
+				if (!(std::getline(std::cin, input)))
+					break;
+
+				client.send(input);
+			}
 		}
 		else if (Arguments::server)
 		{

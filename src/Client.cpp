@@ -34,17 +34,3 @@ void Client::send(std::string msg)
 	this->socket->send(msg, this->server_ip, this->server_port);
 	Log::debug("Sent message");
 }
-void Client::run()
-{
-	Log::verbose("Connected!");
-
-    while (true)
-    {
-	    std::string input;
-
-	    if (!(std::getline(std::cin, input)))
-		    break;
-
-	    send(input);
-    }
-}

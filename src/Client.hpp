@@ -18,12 +18,6 @@ public:
 	/// Sends `msg` to a server specified when created.
 	void send(std::string msg);
 
-	std::string get();
-
-	/// Runs an infinite loop, receiving input and sending
-	/// it with `Client::send`.
-	void run();
-
 private:
 	/// Original server hostname sent to the Client constructor.
 	/// It could be an IP address, if user provided one.
