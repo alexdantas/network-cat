@@ -29,30 +29,33 @@ Server::Server(int port):
 
 	Log::verbose("Server created at port " + Log::intToString(port));
 }
+std::string Server::receive()
+{
+	// will hold address of received message
+	struct sockaddr_in received_addr;
+	memset(&received_addr, '\0', sizeof(received_addr));
+	socklen_t addr_length = sizeof(received_addr);
+
+	char buffer[SERVER_BUFFER_SIZE];
+	memset(&buffer, '\0', SERVER_BUFFER_SIZE);
+
+	int bytes_received = recvfrom(this->socket->raw_socket,
+								buffer,
+								SERVER_BUFFER_SIZE,
+								0, // flags
+								(struct sockaddr*) &received_addr,
+								&addr_length);
+	if (bytes_received < 0)
+		throw std::string(strerror(errno));
+
+	return std::string(buffer);
+}
 void Server::run()
 {
 	// Hell yeah main loop
 	while (true)
 	{
-		// will hold address of received message
-		struct sockaddr_in received_addr;
-		memset(&received_addr, '\0', sizeof(received_addr));
-		socklen_t addr_length = sizeof(received_addr);
-
-		char buffer[SERVER_BUFFER_SIZE];
-		memset(&buffer, '\0', SERVER_BUFFER_SIZE);
-
-		int bytes_received = recvfrom(this->socket->raw_socket,
-		                              buffer,
-		                              SERVER_BUFFER_SIZE,
-		                              0, // flags
-		                              (struct sockaddr*) &received_addr,
-		                              &addr_length);
-		if (bytes_received < 0)
-			throw std::string(strerror(errno));
-
-		std::string received(buffer);
-
+		std::string received = this->receive();
 		Log::verbose("Received " +
 		             Log::intToString(received.length()) +
 		             " bytes");

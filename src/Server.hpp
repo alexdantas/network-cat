@@ -16,8 +16,10 @@ public:
 	/// Creates a server on `port`, hell yeah.
 	Server(int port);
 
-	/// Receives a string from any remote client.
-	std::string get();
+	/// Gets a string from any remote client.
+	/// It could have any size, but generally it would be
+	/// less than 512 bytes.
+	std::string receive();
 
 	/// Runs an infinite loop, receiving messages from hosts.
 	void run();
